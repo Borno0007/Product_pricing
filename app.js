@@ -9,15 +9,19 @@ function setLiveDate() {
   }).format(new Date()).toUpperCase();
 }
 function applyProfile(profile) {
+  const projectValue = profile.project || 'Nova Herbal Shampoo';
+  const project = projectValue.trim() || 'Untitled project';
   const name = profile.name.trim() || 'Your name';
   const organization = profile.organization.trim() || 'Your organization';
+  $('projectInput').value = projectValue;
   $('nameInput').value = profile.name;
   $('organizationInput').value = profile.organization;
+  $('displayProject').textContent = project;
   $('displayName').textContent = name;
   $('displayOrg').textContent = organization;
 }
 function saveProfile() {
-  const profile = {name: $('nameInput').value, organization: $('organizationInput').value};
+  const profile = {project: $('projectInput').value, name: $('nameInput').value, organization: $('organizationInput').value};
   localStorage.setItem('pricepilot-profile', JSON.stringify(profile));
   applyProfile(profile);
   showToast('Workspace profile saved');
@@ -81,4 +85,4 @@ $('themeBtn').addEventListener('click',()=>{document.body.classList.toggle('dark
 $('saveBtn').addEventListener('click',()=>{const saved=JSON.parse(localStorage.getItem('pricepilot-scenarios')||'[]');saved.push({savedAt:new Date().toLocaleString(),...readState()});localStorage.setItem('pricepilot-scenarios',JSON.stringify(saved));$('savedNote').textContent='Scenario saved';showToast('Scenario saved to your workspace');setTimeout(()=>$('savedNote').textContent='',2200);});
 $('exportBtn').addEventListener('click',()=>{const s=readState(),c=calculate(s);const rows=[['Metric','Value'],['Product price',s.price],['Estimated demand',Math.round(c.units)],['Revenue',Math.round(c.revenue)],['Total cost',Math.round(c.totalCost)],['Net profit',Math.round(c.profit)],['Profit margin',percent(c.margin)],['Break-even units',Math.ceil(c.breakEven)],['ROI',percent(c.roi)],['ROAS',c.roas.toFixed(2)+'x']];const blob=new Blob([rows.map(row=>row.join(',')).join('\n')],{type:'text/csv'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='pricepilot-report.csv';a.click();URL.revokeObjectURL(url);showToast('CSV report exported');});
 $('reportBtn').addEventListener('click',()=>window.print()); $('tipsBtn').addEventListener('click',()=>showToast('Tip: Start with Balanced pricing, then compare profit and margin.')); $('menuBtn').addEventListener('click',()=> $('sidebar').classList.toggle('open')); $('performanceSelect').addEventListener('change',(e)=>{charts.performance.data.datasets[0].hidden=e.target.value==='profit';charts.performance.data.datasets[1].hidden=e.target.value==='revenue';charts.performance.update();}); $('saveProfileBtn').addEventListener('click',saveProfile);
-document.addEventListener('click',(e)=>{if(e.target.matches('.scenario-action')){$('priceInput').value=Math.round(+e.target.dataset.price);update();showToast('Scenario price applied to model');}}); const storedProfile=JSON.parse(localStorage.getItem('pricepilot-profile')||'null'); applyProfile(storedProfile||{name:'Jalal Uddin Mohammad Akbar',organization:'Nova Consumer Goods'}); if(localStorage.getItem('pricepilot-theme')==='dark'){$('themeBtn').click();} setLiveDate(); update();
+document.addEventListener('click',(e)=>{if(e.target.matches('.scenario-action')){$('priceInput').value=Math.round(+e.target.dataset.price);update();showToast('Scenario price applied to model');}}); const storedProfile=JSON.parse(localStorage.getItem('pricepilot-profile')||'null'); applyProfile(storedProfile||{project:'Nova Herbal Shampoo',name:'Jalal Uddin Mohammad Akbar',organization:'Nova Consumer Goods'}); if(localStorage.getItem('pricepilot-theme')==='dark'){$('themeBtn').click();} setLiveDate(); update();
