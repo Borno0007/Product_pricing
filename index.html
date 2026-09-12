@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f5f7fb" />
+  <title>PricePilot | Product Pricing & Revenue Simulator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand"><div class="brand-mark">P<span>·</span></div><div><strong>PricePilot</strong><small>Revenue intelligence</small></div></div>
+      <nav class="side-nav" aria-label="Main navigation">
+        <a href="#overview" class="active"><span class="nav-icon">⌂</span> Overview</a>
+        <a href="#simulator"><span class="nav-icon">◈</span> Simulator</a>
+        <a href="#scenarios"><span class="nav-icon">◫</span> Scenarios</a>
+        <a href="#insights"><span class="nav-icon">✦</span> Insights <b class="nav-badge">3</b></a>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="help-card"><span class="help-icon">?</span><strong>Need a hand?</strong><p>Explore pricing decisions with confidence.</p><button class="text-button" id="tipsBtn">View quick tips <span>→</span></button></div>
+        <button class="user-card"><span class="avatar">JA</span><span><strong>Jalal Uddin</strong><small>Administrator</small></span><span class="dots">•••</span></button>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar"><button class="mobile-menu" id="menuBtn" aria-label="Open navigation">☰</button><div class="crumbs"><span>Workspace</span><b>/</b><strong>Revenue simulator</strong></div><div class="top-actions"><button class="icon-button" id="themeBtn" title="Toggle dark mode" aria-label="Toggle dark mode">☾</button><button class="icon-button notification" title="Notifications" aria-label="Notifications">♧<i></i></button><div class="top-avatar">JA</div></div></header>
+
+      <section class="page-heading" id="overview"><div><p class="eyebrow"><span id="currentDate">LIVE DATE</span> <span class="live-dot"></span> LIVE MODEL</p><h1>Good morning, <span id="displayName">Jalal Uddin Mohammad Akbar</span> <span>✦</span></h1><p class="subtitle">Make your next pricing decision with clarity.</p></div><div class="heading-actions"><button class="button secondary" id="resetBtn"><span>↻</span> Reset</button><button class="button primary" id="exportBtn"><span>⇩</span> Export CSV</button></div></section>
+
+      <section class="product-banner"><div class="product-thumb">✺</div><div><span class="label">ACTIVE PRODUCT</span><h2>Nova Herbal Shampoo <span class="status">● Active</span></h2><p><span id="displayOrg">Nova Consumer Goods</span> <span>·</span> Monthly model <span>·</span> Last updated just now</p></div><button class="more-button" title="More product actions">•••</button></section>
+
+      <section class="profile-section"><div class="profile-copy"><span class="label">YOUR WORKSPACE</span><h2>Personalize your simulator</h2><p>Your details appear in the dashboard greeting and reports.</p></div><div class="profile-fields"><label class="profile-field"><span>Your name</span><input id="nameInput" type="text" value="Jalal Uddin Mohammad Akbar" maxlength="60" placeholder="e.g. Ayesha Rahman" /></label><label class="profile-field"><span>Organization name</span><input id="organizationInput" type="text" value="Nova Consumer Goods" maxlength="80" placeholder="e.g. Acme Foods Ltd." /></label><button class="button primary" id="saveProfileBtn"><span>✓</span> Save profile</button></div></section>
+
+      <section class="kpi-grid" aria-label="Key performance indicators">
+        <article class="kpi-card accent-blue"><div class="kpi-top"><span>PRODUCT PRICE</span><span class="kpi-icon">৳</span></div><strong id="kpiPrice">৳149</strong><div class="kpi-foot"><span class="trend up">↗ 6.4%</span><span>vs last model</span></div></article>
+        <article class="kpi-card accent-green"><div class="kpi-top"><span>EST. REVENUE</span><span class="kpi-icon">⌁</span></div><strong id="kpiRevenue">৳1.49M</strong><div class="kpi-foot"><span class="trend up">↗ 12.8%</span><span>vs last model</span></div></article>
+        <article class="kpi-card accent-purple"><div class="kpi-top"><span>EST. NET PROFIT</span><span class="kpi-icon">↗</span></div><strong id="kpiProfit">৳820K</strong><div class="kpi-foot"><span class="trend up" id="profitTrend">↗ 9.2%</span><span>vs last model</span></div></article>
+        <article class="kpi-card accent-orange"><div class="kpi-top"><span>PROFIT MARGIN</span><span class="kpi-icon">%</span></div><strong id="kpiMargin">55.0%</strong><div class="kpi-foot"><span class="trend up">↗ 2.1%</span><span>vs last model</span></div></article>
+        <article class="kpi-card accent-teal"><div class="kpi-top"><span>BREAK-EVEN UNITS</span><span class="kpi-icon">⌁</span></div><strong id="kpiBreakEven">575</strong><div class="kpi-foot"><span class="trend good">− 42 units</span><span>vs last model</span></div></article>
+        <article class="kpi-card accent-pink"><div class="kpi-top"><span>RETURN ON INVESTMENT</span><span class="kpi-icon">◉</span></div><strong id="kpiRoi">78.5%</strong><div class="kpi-foot"><span class="trend up">↗ 8.7%</span><span>vs last model</span></div></article>
+      </section>
+
+      <div class="dashboard-grid" id="simulator">
+        <section class="panel controls-panel"><div class="panel-heading"><div><p class="eyebrow">MODEL INPUTS</p><h2>Pricing assumptions</h2></div><span class="live-pill"><i></i> Auto-updating</span></div>
+          <div class="input-grid">
+            <label class="field"><span>Product price <b>৳</b></span><div class="input-wrap"><span>৳</span><input type="number" id="priceInput" value="149" min="1" max="100000" /></div></label>
+            <label class="field"><span>Production cost <b>৳</b></span><div class="input-wrap"><span>৳</span><input type="number" id="costInput" value="62" min="0" max="100000" /></div></label>
+            <label class="field"><span>Fixed costs <b>৳</b></span><div class="input-wrap"><span>৳</span><input type="number" id="fixedInput" value="50000" min="0" max="100000000" /></div></label>
+            <label class="field"><span>Expected demand <b>units</b></span><div class="input-wrap"><input type="number" id="demandInput" value="10000" min="1" max="100000000" /><span>units</span></div></label>
+            <label class="field"><span>Marketing budget <b>৳</b></span><div class="input-wrap"><span>৳</span><input type="number" id="marketingInput" value="25000" min="0" max="100000000" /></div></label>
+            <label class="field"><span>Discount <b>%</b></span><div class="input-wrap"><input type="number" id="discountInput" value="0" min="0" max="99" step="0.5" /><span>%</span></div></label>
+            <label class="field"><span>Price elasticity <b>index</b></span><div class="input-wrap"><input type="number" id="elasticityInput" value="1.2" min="0" max="5" step="0.1" /><span>×</span></div></label>
+            <label class="field"><span>Competitor average <b>৳</b></span><div class="input-wrap"><span>৳</span><input type="number" id="competitorInput" value="142" min="1" max="100000" /></div></label>
+          </div>
+          <div class="range-row"><div class="range-label"><span>Price position vs. competitors</span><strong id="pricePosition">+4.9%</strong></div><input type="range" id="priceRange" min="50" max="250" value="149" step="1" /><div class="range-scale"><span>৳50</span><span>৳250</span></div></div>
+          <div class="control-actions"><button class="button secondary" id="saveBtn"><span>＋</span> Save scenario</button><span class="saved-note" id="savedNote"></span></div>
+        </section>
+
+        <section class="panel chart-panel"><div class="panel-heading"><div><p class="eyebrow">DEMAND CURVE</p><h2>Price vs. estimated demand</h2></div><div class="chart-legend"><span><i class="legend-dot blue"></i> Demand</span><span><i class="legend-dot orange"></i> Current price</span></div></div><div class="chart-wrap large"><canvas id="demandChart"></canvas></div><div class="chart-callout"><span class="callout-icon">✦</span><p id="demandCallout"><strong>Insight:</strong> At ৳149, your estimated demand is 10,000 units. A 10% price increase could affect volume by approximately 12%.</p></div></section>
+      </div>
+
+      <section class="analytics-grid"><section class="panel chart-panel"><div class="panel-heading"><div><p class="eyebrow">PERFORMANCE CURVE</p><h2>Revenue & profit by price</h2></div><select id="performanceSelect" aria-label="Chart metric"><option value="both">Revenue & Profit</option><option value="revenue">Revenue only</option><option value="profit">Profit only</option></select></div><div class="chart-wrap"><canvas id="performanceChart"></canvas></div></section><section class="panel chart-panel"><div class="panel-heading"><div><p class="eyebrow">COST STRUCTURE</p><h2>Cost breakdown</h2></div><span class="period-tag">Monthly</span></div><div class="donut-layout"><div class="chart-wrap donut"><canvas id="costChart"></canvas><div class="donut-total"><strong id="costTotal">৳670K</strong><span>Total costs</span></div></div><div class="cost-legend" id="costLegend"><div><i class="swatch blue"></i><span>Production costs</span><strong>৳620K</strong><small>92.5%</small></div><div><i class="swatch orange"></i><span>Marketing</span><strong>৳25K</strong><small>3.7%</small></div><div><i class="swatch purple"></i><span>Fixed costs</span><strong>৳25K</strong><small>3.7%</small></div></div></div></section></section>
+
+      <section class="section-heading" id="scenarios"><div><p class="eyebrow">SCENARIO PLANNER</p><h2>Compare pricing strategies</h2><p>See how a small pricing shift changes the shape of your business.</p></div><button class="button secondary" id="reportBtn"><span>▣</span> Print report</button></section>
+      <section class="scenario-grid" id="scenarioCards"></section>
+
+      <section class="bottom-grid" id="insights"><section class="panel insights-panel"><div class="panel-heading"><div><p class="eyebrow">DECISION SUPPORT</p><h2>Business insights</h2></div><span class="insight-count">3 observations</span></div><div id="insightsList" class="insights-list"></div></section><section class="panel chart-panel break-panel"><div class="panel-heading"><div><p class="eyebrow">UNIT ECONOMICS</p><h2>Break-even analysis</h2></div><span class="period-tag">Current model</span></div><div class="chart-wrap"><canvas id="breakEvenChart"></canvas></div></section></section>
+      <footer><span>© 2024 PricePilot</span><span>Developed by <strong>Jalal Uddin Mohammad Akbar</strong></span><span>Business intelligence, made clear.</span></footer>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="app.js"></script>
+</body>
+</html>
